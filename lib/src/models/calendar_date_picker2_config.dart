@@ -214,6 +214,8 @@ class CalendarDatePicker2Config {
     this.dynamicCalendarRows,
     this.dayModeScrollDirection,
     this.navigationButtonBuilder,
+    this.navigationLastButtonBuilder,
+    this.navigationNextButtonBuilder,
     this.selectedRangeHighlightBuilder,
     this.selectedRangeDecorationPredicate,
   })  : calendarType = calendarType ?? CalendarDatePicker2Type.single,
@@ -444,6 +446,12 @@ class CalendarDatePicker2Config {
   /// Function to provide full control over navigation button (previous/next month)
   final NavigationButtonBuilder? navigationButtonBuilder;
 
+  /// Builder for previous month navigation button
+  final NavigationButtonBuilder? navigationLastButtonBuilder;
+
+  /// Builder for next month navigation button
+  final NavigationButtonBuilder? navigationNextButtonBuilder;
+
   /// Function to provide full control over range picker highlight
   final SelectedRangeHighlightBuilder? selectedRangeHighlightBuilder;
 
@@ -522,6 +530,8 @@ class CalendarDatePicker2Config {
     bool? dynamicCalendarRows,
     Axis? dayModeScrollDirection,
     NavigationButtonBuilder? navigationButtonBuilder,
+    NavigationButtonBuilder? navigationLastButtonBuilder,
+    NavigationButtonBuilder? navigationNextButtonBuilder,
     SelectedRangeHighlightBuilder? selectedRangeHighlightBuilder,
     SelectedRangeDecorationPredicate? selectedRangeDecorationPredicate,
   }) {
@@ -624,6 +634,8 @@ class CalendarDatePicker2Config {
       dayModeScrollDirection:
           dayModeScrollDirection ?? this.dayModeScrollDirection,
       navigationButtonBuilder: navigationButtonBuilder ?? this.navigationButtonBuilder,
+      navigationLastButtonBuilder: navigationLastButtonBuilder ?? this.navigationLastButtonBuilder,
+      navigationNextButtonBuilder: navigationNextButtonBuilder ?? this.navigationNextButtonBuilder,
       selectedRangeHighlightBuilder:
           selectedRangeHighlightBuilder ?? this.selectedRangeHighlightBuilder,
       selectedRangeDecorationPredicate: selectedRangeDecorationPredicate ??
@@ -706,6 +718,8 @@ class CalendarDatePicker2WithActionButtonsConfig
     bool? dynamicCalendarRows,
     Axis? dayModeScrollDirection,
     NavigationButtonBuilder? navigationButtonBuilder,
+    NavigationButtonBuilder? navigationLastButtonBuilder,
+    NavigationButtonBuilder? navigationNextButtonBuilder,
     SelectedRangeHighlightBuilder? selectedRangeHighlightBuilder,
     SelectedRangeDecorationPredicate? selectedRangeDecorationPredicate,
     this.gapBetweenCalendarAndButtons,
@@ -788,6 +802,8 @@ class CalendarDatePicker2WithActionButtonsConfig
           dynamicCalendarRows: dynamicCalendarRows,
           dayModeScrollDirection: dayModeScrollDirection,
           navigationButtonBuilder: navigationButtonBuilder,
+          navigationLastButtonBuilder: navigationLastButtonBuilder,
+          navigationNextButtonBuilder: navigationNextButtonBuilder,
           selectedRangeHighlightBuilder: selectedRangeHighlightBuilder,
           selectedRangeDecorationPredicate: selectedRangeDecorationPredicate,
         );
@@ -900,6 +916,8 @@ class CalendarDatePicker2WithActionButtonsConfig
     bool? dynamicCalendarRows,
     Axis? dayModeScrollDirection,
     NavigationButtonBuilder? navigationButtonBuilder,
+    NavigationButtonBuilder? navigationLastButtonBuilder,
+    NavigationButtonBuilder? navigationNextButtonBuilder,
     SelectedRangeHighlightBuilder? selectedRangeHighlightBuilder,
     SelectedRangeDecorationPredicate? selectedRangeDecorationPredicate,
   }) {
@@ -1002,6 +1020,8 @@ class CalendarDatePicker2WithActionButtonsConfig
       dayModeScrollDirection:
           dayModeScrollDirection ?? this.dayModeScrollDirection,
       navigationButtonBuilder: navigationButtonBuilder ?? this.navigationButtonBuilder,
+      navigationLastButtonBuilder: navigationLastButtonBuilder ?? this.navigationLastButtonBuilder,
+      navigationNextButtonBuilder: navigationNextButtonBuilder ?? this.navigationNextButtonBuilder,
       selectedRangeHighlightBuilder:
           selectedRangeHighlightBuilder ?? this.selectedRangeHighlightBuilder,
       selectedRangeDecorationPredicate: selectedRangeDecorationPredicate ??

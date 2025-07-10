@@ -332,26 +332,55 @@ class _CalendarViewState extends State<_CalendarView> {
               children: <Widget>[
                 if (widget.config.centerAlignModePicker != true) const Spacer(),
                 if (widget.config.hideLastMonthIcon != true)
-                  IconButton(
-                    splashRadius: widget.config.dayMaxWidth != null
-                        ? widget.config.dayMaxWidth! * 2 / 3
-                        : null,
-                    icon: widget.config.lastMonthIcon ??
-                        Icon(widget.config.dayModeScrollDirection ==
-                                Axis.vertical
-                            ? Icons.keyboard_arrow_up
-                            : Icons.chevron_left),
-                    color: controlColor,
-                    tooltip: _isDisplayingFirstMonth
-                        ? null
-                        : _localizations.previousMonthTooltip,
-                    onPressed:
-                        _isDisplayingFirstMonth ? null : _handlePreviousMonth,
-                  ),
+                  ...(() {
+                    final btn = widget.config.navigationLastButtonBuilder?.call(
+                      isNextButton: false,
+                      isEnabled: !_isDisplayingFirstMonth,
+                      onPressed: _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+                      defaultIcon: widget.config.lastMonthIcon ??
+                          Icon(widget.config.dayModeScrollDirection == Axis.vertical
+                              ? Icons.keyboard_arrow_up
+                              : Icons.chevron_left),
+                      defaultTooltip: _isDisplayingFirstMonth ? null : _localizations.previousMonthTooltip,
+                    ) ?? widget.config.navigationButtonBuilder?.call(
+                      isNextButton: false,
+                      isEnabled: !_isDisplayingFirstMonth,
+                      onPressed: _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+                      defaultIcon: widget.config.lastMonthIcon ??
+                          Icon(widget.config.dayModeScrollDirection == Axis.vertical
+                              ? Icons.keyboard_arrow_up
+                              : Icons.chevron_left),
+                      defaultTooltip: _isDisplayingFirstMonth ? null : _localizations.previousMonthTooltip,
+                    );
+                    if (btn != null) return [btn];
+                    return [IconButton(
+                      splashRadius: widget.config.dayMaxWidth != null
+                          ? widget.config.dayMaxWidth! * 2 / 3
+                          : null,
+                      icon: widget.config.lastMonthIcon ??
+                          Icon(widget.config.dayModeScrollDirection == Axis.vertical
+                              ? Icons.keyboard_arrow_up
+                              : Icons.chevron_left),
+                      color: controlColor,
+                      tooltip: _isDisplayingFirstMonth
+                          ? null
+                          : _localizations.previousMonthTooltip,
+                      onPressed: _isDisplayingFirstMonth ? null : _handlePreviousMonth,
+                    )];
+                  })(),
                 if (widget.config.centerAlignModePicker == true) const Spacer(),
                 if (widget.config.hideNextMonthIcon != true)
                   ...(() {
-                    final btn = widget.config.navigationButtonBuilder?.call(
+                    final btn = widget.config.navigationNextButtonBuilder?.call(
+                      isNextButton: true,
+                      isEnabled: !_isDisplayingLastMonth,
+                      onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
+                      defaultIcon: widget.config.nextMonthIcon ??
+                          Icon(widget.config.dayModeScrollDirection == Axis.vertical
+                              ? Icons.keyboard_arrow_down
+                              : Icons.chevron_right),
+                      defaultTooltip: _isDisplayingLastMonth ? null : _localizations.nextMonthTooltip,
+                    ) ?? widget.config.navigationButtonBuilder?.call(
                       isNextButton: true,
                       isEnabled: !_isDisplayingLastMonth,
                       onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
