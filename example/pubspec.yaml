@@ -38,6 +38,8 @@ dependencies:
 
   calendar_date_picker2:
     path: ../
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

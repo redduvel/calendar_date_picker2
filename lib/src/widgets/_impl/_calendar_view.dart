@@ -350,21 +350,33 @@ class _CalendarViewState extends State<_CalendarView> {
                   ),
                 if (widget.config.centerAlignModePicker == true) const Spacer(),
                 if (widget.config.hideNextMonthIcon != true)
-                  IconButton(
-                    splashRadius: widget.config.dayMaxWidth != null
-                        ? widget.config.dayMaxWidth! * 2 / 3
-                        : null,
-                    icon: widget.config.nextMonthIcon ??
-                        Icon(widget.config.dayModeScrollDirection ==
-                                Axis.vertical
-                            ? Icons.keyboard_arrow_down
-                            : Icons.chevron_right),
-                    color: controlColor,
-                    tooltip: _isDisplayingLastMonth
-                        ? null
-                        : _localizations.nextMonthTooltip,
-                    onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
-                  ),
+                  ...(() {
+                    final btn = widget.config.navigationButtonBuilder?.call(
+                      isNextButton: true,
+                      isEnabled: !_isDisplayingLastMonth,
+                      onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
+                      defaultIcon: widget.config.nextMonthIcon ??
+                          Icon(widget.config.dayModeScrollDirection == Axis.vertical
+                              ? Icons.keyboard_arrow_down
+                              : Icons.chevron_right),
+                      defaultTooltip: _isDisplayingLastMonth ? null : _localizations.nextMonthTooltip,
+                    );
+                    if (btn != null) return [btn];
+                    return [IconButton(
+                      splashRadius: widget.config.dayMaxWidth != null
+                          ? widget.config.dayMaxWidth! * 2 / 3
+                          : null,
+                      icon: widget.config.nextMonthIcon ??
+                          Icon(widget.config.dayModeScrollDirection == Axis.vertical
+                              ? Icons.keyboard_arrow_down
+                              : Icons.chevron_right),
+                      color: controlColor,
+                      tooltip: _isDisplayingLastMonth
+                          ? null
+                          : _localizations.nextMonthTooltip,
+                      onPressed: _isDisplayingLastMonth ? null : _handleNextMonth,
+                    )];
+                  })(),
               ],
             ),
           ),

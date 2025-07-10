@@ -112,6 +112,21 @@ typedef ModePickerTextHandler = String? Function(
 /// Callback for the scroll calendar view on scrolling
 typedef ScrollViewOnScrolling = void Function(double offset);
 
+/// Builder for navigation button (previous/next month)
+/// 
+/// [isNextButton] will be true if function is called to build next month button
+/// [isEnabled] indicates if the button should be enabled
+/// [onPressed] is the callback function for button press
+/// [defaultIcon] is the default icon that would be used
+/// [defaultTooltip] is the default tooltip that would be used
+typedef NavigationButtonBuilder = Widget? Function({
+  required bool isNextButton,
+  required bool isEnabled,
+  required VoidCallback? onPressed,
+  required Widget defaultIcon,
+  required String? defaultTooltip,
+});
+
 /// Predicate to determine the text style for a day.
 typedef DayTextStylePredicate = TextStyle? Function({
   required DateTime date,
@@ -198,6 +213,7 @@ class CalendarDatePicker2Config {
     this.scrollViewController,
     this.dynamicCalendarRows,
     this.dayModeScrollDirection,
+    this.navigationButtonBuilder,
     this.selectedRangeHighlightBuilder,
     this.selectedRangeDecorationPredicate,
   })  : calendarType = calendarType ?? CalendarDatePicker2Type.single,
@@ -425,6 +441,9 @@ class CalendarDatePicker2Config {
   /// Only works when [calendarViewMode] is not [CalendarDatePicker2Mode.scroll]
   final Axis? dayModeScrollDirection;
 
+  /// Function to provide full control over navigation button (previous/next month)
+  final NavigationButtonBuilder? navigationButtonBuilder;
+
   /// Function to provide full control over range picker highlight
   final SelectedRangeHighlightBuilder? selectedRangeHighlightBuilder;
 
@@ -502,6 +521,7 @@ class CalendarDatePicker2Config {
     ScrollController? scrollViewController,
     bool? dynamicCalendarRows,
     Axis? dayModeScrollDirection,
+    NavigationButtonBuilder? navigationButtonBuilder,
     SelectedRangeHighlightBuilder? selectedRangeHighlightBuilder,
     SelectedRangeDecorationPredicate? selectedRangeDecorationPredicate,
   }) {
@@ -603,6 +623,7 @@ class CalendarDatePicker2Config {
       dynamicCalendarRows: dynamicCalendarRows ?? this.dynamicCalendarRows,
       dayModeScrollDirection:
           dayModeScrollDirection ?? this.dayModeScrollDirection,
+      navigationButtonBuilder: navigationButtonBuilder ?? this.navigationButtonBuilder,
       selectedRangeHighlightBuilder:
           selectedRangeHighlightBuilder ?? this.selectedRangeHighlightBuilder,
       selectedRangeDecorationPredicate: selectedRangeDecorationPredicate ??
@@ -684,6 +705,7 @@ class CalendarDatePicker2WithActionButtonsConfig
     ScrollController? scrollViewController,
     bool? dynamicCalendarRows,
     Axis? dayModeScrollDirection,
+    NavigationButtonBuilder? navigationButtonBuilder,
     SelectedRangeHighlightBuilder? selectedRangeHighlightBuilder,
     SelectedRangeDecorationPredicate? selectedRangeDecorationPredicate,
     this.gapBetweenCalendarAndButtons,
@@ -765,6 +787,7 @@ class CalendarDatePicker2WithActionButtonsConfig
           scrollViewController: scrollViewController,
           dynamicCalendarRows: dynamicCalendarRows,
           dayModeScrollDirection: dayModeScrollDirection,
+          navigationButtonBuilder: navigationButtonBuilder,
           selectedRangeHighlightBuilder: selectedRangeHighlightBuilder,
           selectedRangeDecorationPredicate: selectedRangeDecorationPredicate,
         );
@@ -876,6 +899,7 @@ class CalendarDatePicker2WithActionButtonsConfig
     ScrollController? scrollViewController,
     bool? dynamicCalendarRows,
     Axis? dayModeScrollDirection,
+    NavigationButtonBuilder? navigationButtonBuilder,
     SelectedRangeHighlightBuilder? selectedRangeHighlightBuilder,
     SelectedRangeDecorationPredicate? selectedRangeDecorationPredicate,
   }) {
@@ -946,19 +970,6 @@ class CalendarDatePicker2WithActionButtonsConfig
       modePickerBuilder: modePickerBuilder ?? this.modePickerBuilder,
       modePickersGap: modePickersGap ?? this.modePickersGap,
       rangeBidirectional: rangeBidirectional ?? this.rangeBidirectional,
-      gapBetweenCalendarAndButtons:
-          gapBetweenCalendarAndButtons ?? this.gapBetweenCalendarAndButtons,
-      cancelButtonTextStyle:
-          cancelButtonTextStyle ?? this.cancelButtonTextStyle,
-      cancelButton: cancelButton ?? this.cancelButton,
-      okButtonTextStyle: okButtonTextStyle ?? this.okButtonTextStyle,
-      okButton: okButton ?? this.okButton,
-      openedFromDialog: openedFromDialog ?? this.openedFromDialog,
-      closeDialogOnCancelTapped:
-          closeDialogOnCancelTapped ?? this.closeDialogOnCancelTapped,
-      closeDialogOnOkTapped:
-          closeDialogOnOkTapped ?? this.closeDialogOnOkTapped,
-      buttonPadding: buttonPadding ?? this.buttonPadding,
       calendarViewScrollPhysics:
           calendarViewScrollPhysics ?? this.calendarViewScrollPhysics,
       daySplashColor: daySplashColor ?? this.daySplashColor,
@@ -990,10 +1001,24 @@ class CalendarDatePicker2WithActionButtonsConfig
       dynamicCalendarRows: dynamicCalendarRows ?? this.dynamicCalendarRows,
       dayModeScrollDirection:
           dayModeScrollDirection ?? this.dayModeScrollDirection,
+      navigationButtonBuilder: navigationButtonBuilder ?? this.navigationButtonBuilder,
       selectedRangeHighlightBuilder:
           selectedRangeHighlightBuilder ?? this.selectedRangeHighlightBuilder,
       selectedRangeDecorationPredicate: selectedRangeDecorationPredicate ??
           this.selectedRangeDecorationPredicate,
+      gapBetweenCalendarAndButtons:
+          gapBetweenCalendarAndButtons ?? this.gapBetweenCalendarAndButtons,
+      cancelButtonTextStyle:
+          cancelButtonTextStyle ?? this.cancelButtonTextStyle,
+      cancelButton: cancelButton ?? this.cancelButton,
+      okButtonTextStyle: okButtonTextStyle ?? this.okButtonTextStyle,
+      okButton: okButton ?? this.okButton,
+      openedFromDialog: openedFromDialog ?? this.openedFromDialog,
+      closeDialogOnCancelTapped:
+          closeDialogOnCancelTapped ?? this.closeDialogOnCancelTapped,
+      closeDialogOnOkTapped:
+          closeDialogOnOkTapped ?? this.closeDialogOnOkTapped,
+      buttonPadding: buttonPadding ?? this.buttonPadding,
     );
   }
 }
